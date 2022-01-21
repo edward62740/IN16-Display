@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include <Wire.h>
 #include "NTC_PCA9698.h"
 #include <WiFi.h>
@@ -10,21 +11,22 @@
 #include <esp_wifi.h>
 #include "num2disp.h"
 #include <EEPROM.h>
-#include <WS2812FX.h> //RGB LED lib
+#include <WS2812FX.h>
 
 String processor(const String &var);
+String outputState(int output);
 void tubes(void *pvParameters);
 void leds(void *pvParameters);
 bool num2disp_gpio_write(uint8_t pin, bool data);
 
 /* InfluxDB Connection Parameters */
-#define WIFI_SSID ""
-#define WIFI_PASSWORD ""
-#define INFLUXDB_URL "
-#define INFLUXDB_TOKEN "="
-#define INFLUXDB_ORG ""
-#define INFLUXDB_BUCKET ""
-#define TZ_INFO ""
+#define WIFI_SSID "."
+#define WIFI_PASSWORD "."
+#define INFLUXDB_URL "."
+#define INFLUXDB_TOKEN "."
+#define INFLUXDB_ORG "."
+#define INFLUXDB_BUCKET "."
+#define TZ_INFO "."
 
 // define the number of bytes you want to access
 #define EEPROM_SIZE 1
@@ -142,7 +144,7 @@ String processor(const String &var)
   if (var == "BUTTONPLACEHOLDER")
   {
     String buttons = "";
-    buttons += "<h4> Master Bedroom   <---->   Bedroom 2 </h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"2\" " + outputState(2) + "><span class=\"slider\"></span></label>";
+    buttons += "<h4> Sensor 1   <---->   Sensor 2 </h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"2\" " + outputState(2) + "><span class=\"slider\"></span></label>";
     return buttons;
   }
   return String();
@@ -178,12 +180,12 @@ void setup()
   if (EEPROM.read(0) == 0)
   {
     state = false;
-    query = "from(bucket: \"MESH\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"CO2\") |> filter(fn: (r) => r.UID == \"22017\") |> filter(fn: (r) => r._field == \"CO2\") |> last()";
+    query = "from(bucket: \"xxxx\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"xxxx\") |> filter(fn: (r) => r.UID == \"xxxx\") |> filter(fn: (r) => r._field == \"xxxx\") |> last()";
   }
   else
   {
     state = true;
-    query = "from(bucket: \"MESH\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"CO2\") |> filter(fn: (r) => r.UID == \"22016\") |> filter(fn: (r) => r._field == \"CO2\") |> last()";
+    query = "from(bucket: \"xxxx\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"xxxx\") |> filter(fn: (r) => r.UID == \"xxxx\") |> filter(fn: (r) => r._field == \"xxxx\") |> last()";
   }
   num2disp_createInstanceNumericalDisplay(&tube1, pinout1);
   num2disp_createInstanceNumericalDisplay(&tube2, pinout2);
@@ -261,7 +263,7 @@ void setup()
                 digitalWrite(inputMessage1.toInt(), inputMessage2.toInt());
                 if (inputMessage1.toInt() == 2 && inputMessage2.toInt() == 0)
                 {
-                  query = "from(bucket: \"MESH\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"CO2\") |> filter(fn: (r) => r.UID == \"22017\") |> filter(fn: (r) => r._field == \"CO2\") |> last()";
+                  query = "from(bucket: \"xxxx\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"xxxx\") |> filter(fn: (r) => r.UID == \"xxxx\") |> filter(fn: (r) => r._field == \"xxxx\") |> last()";
                   changed = true;
                   state = false;
                   EEPROM.write(0, state);
@@ -270,7 +272,7 @@ void setup()
                 }
                 else if (inputMessage1.toInt() == 2 && inputMessage2.toInt() == 1)
                 {
-                  query = "from(bucket: \"MESH\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"CO2\") |> filter(fn: (r) => r.UID == \"22016\") |> filter(fn: (r) => r._field == \"CO2\") |> last()";
+                  query = "from(bucket: \"xxxx\") |> range(start: -30m) |> filter(fn: (r) => r._measurement == \"xxxx\") |> filter(fn: (r) => r.UID == \"xxxx\") |> filter(fn: (r) => r._field == \"xxxx\") |> last()";
                   changed = true;
                   state = true;
                   EEPROM.write(0, state);
@@ -283,10 +285,6 @@ void setup()
                 inputMessage1 = "No message sent";
                 inputMessage2 = "No message sent";
               }
-              Serial.print("GPIO: ");
-              Serial.print(inputMessage1);
-              Serial.print(" - Set to: ");
-              Serial.println(inputMessage2);
               request->send(200, "text/plain", "OK");
             });
 
