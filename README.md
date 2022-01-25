@@ -4,7 +4,7 @@ This is an Internet connected nixie tube display (4 x IN-16s) for displaying inf
 
 This project allows for seamless integration into existing smart home networks for displaying data which users may not want to access using an app/web application (i.e CO2 levels at a glance).
 
-The provided software displays CO2 data on the device, and hosts a webserver to allow for simple adjustment of input source (i.e sensor 1 / 2).
+The provided software displays CO2 data on the device, and hosts a webserver to allow for simple adjustment of input source (i.e sensor 1/2).
 
 
 ![alt text](https://github.com/edward62740/in16-display/blob/main/Hardware/in16display.jpeg "IN-16 Display")
