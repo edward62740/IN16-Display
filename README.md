@@ -10,4 +10,4 @@ The provided software displays CO2 data on the device, and hosts a webserver to 
 ![alt text](https://github.com/edward62740/IN16-Display/blob/master/Hardware/in16display.jpeg "IN-16 Display")
 
 
-The hardware consists of an ESP32 with GPIO expander, HV power supply, darlington arrays, fan and 4x in-16 tubes.
+The hardware consists of an ESP32 with GPIO expander, HV power supply, darlington arrays, fan and 4x in-16 tubes. It is based on the hardware from one of my other projects: [Project Nixie](https://github.com/devKarthikRaj/project-nixie "Project Nixie").
