@@ -1,9 +1,8 @@
-
 name: CI
 
 defaults:
   run:
-    working-directory: "Software"
+    working-directory: ./Software
     
 on:
   push:
