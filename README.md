@@ -1,4 +1,4 @@
-# IN-16 Display
+# WMNS IN-16
 
 This is an Internet connected nixie tube display (4 x IN-16s) for displaying information (e.g CO2 levels, air quality...). It is designed to be used with [Wireless Mesh Network System](https://github.com/edward62740/Wireless-Mesh-Network-System) or other similar system with a database (InfluxDB, Firebase) to fetch and display information.
 
